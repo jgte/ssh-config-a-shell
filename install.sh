@@ -1,10 +1,11 @@
 #!/bin/sh
 
-CONFIG=config
-LOCAL_SSH_SIR=~/Documents/.ssh
+LOCAL_SSH_DIR=~/Documents/.ssh
+DOT_PROFILE=~/Documents/.profile
+SSH_ALIAS="alias ssh='ssh -F ~/Documents/.ssh/config.a-Shell'"
 
 #make sure we're in the right place
-case "$(basename $APPDIR)" in
+case "$(basename ${APPDIR:-empty})" in
   "a-Shell.app")
     echo "Detected a-Shell"
   ;;
@@ -14,35 +15,46 @@ case "$(basename $APPDIR)" in
   ;;
 esac
 
-#check if config file for this script exists (relative to the current dir)
-if ! test -e $CONFIG
+#check if ssh dir has already been picked
+MSG="pickFolder to created ~ssh link"
+if test -d ~ssh
 then
-  echo "Need $CONFIG file to proceed; see https://github.com/jgte/ssh-config-a-shell for more info."
-  exit 3
-fi
-
-#check if package list is available
-if grep -q PKG_LIST $CONFIG
-then
-  #install relevant packages
-  for i in $(grep PKG_LIST | awk -F: '{print $2}')
-  do
-    pkg list $i | grep -q $i && echo "$i is installed" || pkg install $i
-  done
+  echo "Already called $MSG"
 else
-  echo "WARNING: could not find PKG_LIST entry in $CONFIG file, skipped installing packages..."
-fi
-
-#check if ssh dir is available
-if test -L $LOCAL_SSH_SIR
-then
-  echo "Already have link $LOCAL_SSH_SIR with target $(readlink $LOCAL_SSH_SIR)"
-else
-  if grep -q SSH_DIR $CONFIG
+  echo "Pick the location of the .ssh dir, outside a-Shell"
+  pickFolder
+  if ! test -d ~ssh
   then
-    cd ~/Documents
-    ln -sfv $(grep -q SSH_DIR $CONFIG) ./.ssh
-  else
-    echo "WARNING: could not find SSH_DIR entry in $CONFIG file, skipped linking .ssh dir..."
+    echo "ERROR: cannof find ~ssh dir, which will appear once you pick the .ssh dir"
+    exit 3
   fi
+  echo "Completed $MSG"
+fi
+
+#check if link to ssh dir is available in $LOCAL_SSH_DIR
+MSG="link $LOCAL_SSH_DIR (~/Documents/.ssh) with target $(readlink $LOCAL_SSH_DIR) (~ssh)"
+if test -L $LOCAL_SSH_DIR
+then
+  echo "Already have $MSG"
+else
+  cd ~/Documents
+  ln -sfv ~ssh .ssh
+  cd - > /dev/null
+  echo "Created $MSG"
+fi
+
+#patch .profile
+MSG=".profile with ssh alias"
+if test -e $DOT_PROFILE
+then
+  if grep -q "$SSH_ALIAS" $DOT_PROFILE
+  then
+    echo "Already have $MSG"
+  else
+    echo "Appending $MSG"
+    echo "$SSH_ALIAS" >> $DOT_PROFILE
+  fi
+else
+  echo "Creating $MSG"
+  echo "$SSH_ALIAS" > $DOT_PROFILE
 fi
