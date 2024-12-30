@@ -1,9 +1,5 @@
 #!/bin/sh
 
-LOCAL_SSH_DIR=~/Documents/.ssh
-DOT_PROFILE=~/Documents/.profile
-SSH_ALIAS="alias ssh='ssh -F ~/Documents/.ssh/config.a-Shell'"
-
 #make sure we're in the right place
 case "$(basename ${APPDIR:-empty})" in
   "a-Shell.app")
@@ -14,6 +10,9 @@ case "$(basename ${APPDIR:-empty})" in
     exit 3
   ;;
 esac
+
+#load relevant parameters
+source config
 
 #check if ssh dir has already been picked
 MSG="pickFolder to created ~ssh link"
