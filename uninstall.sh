@@ -13,6 +13,12 @@ esac
 
 #load relevant parameters
 ./config.sh
+echo "SSH_DIR=$SSH_DIR"
+echo "DOT_PROFILE=$DOT_PROFILE"
+echo "SSH_ALIAS=$SSH_ALIAS"
+echo "NORMAL_SSH_CONFIG=$NORMAL_SSH_CONFIG"
+echo "ASHELL_SSH_CONFIG=$ASHELL_SSH_CONFIG"
+echo "PKG_INSTALL_LIST=$PKG_INSTALL_LIST"
 
 #check if ssh dir has already been picked
 MSG="deletemark to delete ~ssh link"
@@ -32,7 +38,7 @@ fi
 
 #check if link to ssh dir is available in $SSH_DIR
 MSG="link $SSH_DIR (~/Documents/.ssh) with target $(readlink $SSH_DIR) (~ssh)"
-if ! test -L $SSH_DIR
+if test -z "$SSH_DIR" || ! test -L $SSH_DIR
 then
   echo "Already removed $MSG"
 else
