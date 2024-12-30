@@ -30,9 +30,9 @@ else
   echo "Completed $MSG"
 fi
 
-#check if link to ssh dir is available in $LOCAL_SSH_DIR
-MSG="link $LOCAL_SSH_DIR (~/Documents/.ssh) with target $(readlink $LOCAL_SSH_DIR) (~ssh)"
-if test -L $LOCAL_SSH_DIR
+#check if link to ssh dir is available in $SSH_DIR
+MSG="link $SSH_DIR (~/Documents/.ssh) with target $(readlink $SSH_DIR) (~ssh)"
+if test -L $SSH_DIR
 then
   echo "Already have $MSG"
 else
