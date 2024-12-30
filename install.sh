@@ -12,13 +12,13 @@ case "$(basename ${APPDIR:-empty})" in
 esac
 
 #load relevant parameters
-./config.sh
-echo "SSH_DIR=$SSH_DIR"
-echo "DOT_PROFILE=$DOT_PROFILE"
-echo "SSH_ALIAS=$SSH_ALIAS"
-echo "NORMAL_SSH_CONFIG=$NORMAL_SSH_CONFIG"
-echo "ASHELL_SSH_CONFIG=$ASHELL_SSH_CONFIG"
-echo "PKG_INSTALL_LIST=$PKG_INSTALL_LIST"
+SSH_DIR=~/Documents/.ssh
+DOT_PROFILE=~/Documents/.profile
+SSH_ALIAS="alias ssh='ssh -F ~/Documents/.ssh/config.a-Shell'"
+NORMAL_SSH_CONFIG=$SSH_DIR/config
+ASHELL_SSH_CONFIG=$NORMAL_SSH_CONFIG.a-Shell
+PKG_INSTALL_LIST=pkg-install.list
+
 
 #check if ssh dir has already been picked
 MSG="pickFolder to create ~ssh link"
