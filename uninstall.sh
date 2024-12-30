@@ -47,7 +47,8 @@ then
   if grep -q "$SSH_ALIAS" $DOT_PROFILE
   then
     echo "Cleaning $MSG"
-    grep -v "$SSH_ALIAS" $DOT_PROFILE > $DOT_PROFILE.tmp && mv -fv $DOT_PROFILE.tmp $DOT_PROFILE
+    cp $DOT_PROFILE $DOT_PROFILE.bup
+    grep -v $SSH_ALIAS $DOT_PROFILE > $DOT_PROFILE.tmp && mv -fv $DOT_PROFILE.tmp $DOT_PROFILE
   else
     echo "Already cleaned $MSG"
   fi
