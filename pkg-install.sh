@@ -1,6 +1,8 @@
 #!/bin/sh
 
 CONFIG=pkg-install.list
+#load relevant parameters
+./config.sh
 
 #check if config file for this script exists (relative to the current dir)
 if ! test -e $CONFIG

@@ -1,7 +1,7 @@
 #!/bin/sh
 
 #load relevant parameters
-source config
+./config.sh
 
 if ! test -e $NORMAL_SSH_CONFIG
 then

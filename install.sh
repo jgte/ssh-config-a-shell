@@ -12,7 +12,7 @@ case "$(basename ${APPDIR:-empty})" in
 esac
 
 #load relevant parameters
-source config
+./config.sh
 
 #check if ssh dir has already been picked
 MSG="pickFolder to created ~ssh link"

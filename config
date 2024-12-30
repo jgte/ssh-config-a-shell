@@ -1,6 +1,0 @@
-
-SSH_DIR=~/Documents/.ssh
-DOT_PROFILE=~/Documents/.profile
-SSH_ALIAS="alias ssh='ssh -F ~/Documents/.ssh/config.a-Shell'"
-NORMAL_SSH_CONFIG=$SSH_DIR/config
-ASHELL_SSH_CONFIG=$NORMAL_SSH_CONFIG.a-Shell
