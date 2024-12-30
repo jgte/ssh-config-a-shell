@@ -15,19 +15,18 @@ esac
 ./config.sh
 
 #check if ssh dir has already been picked
-MSG="pickFolder to created ~ssh link"
+MSG="pickFolder to create ~ssh link"
 if test -d ~ssh
 then
   echo "Already called $MSG"
 else
-  echo "Pick the location of the .ssh dir, outside a-Shell"
   pickFolder
-  if ! test -d ~ssh
+  if test -d ~ssh
   then
-    echo "ERROR: cannof find ~ssh dir, which will appear once you pick the .ssh dir"
+    echo "ERROR: cannot find ~ssh dir, which will appear once you pick the .ssh dir"
     exit 3
   fi
-  echo "Completed $MSG"
+  echo "Successfully called $MSG"
 fi
 
 #check if link to ssh dir is available in $SSH_DIR
